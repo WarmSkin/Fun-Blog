@@ -2,7 +2,14 @@ const { Blog, Like, Comment } = require('../models')
 
 async function index(req, res) {
   try {
-    const blogs = await Blog.findAll()
+    const blogs = await Blog.findAll(
+      {
+        include: [
+          { model: Comment, as: "commentReceived" },
+          { model: Like, as: "likeReceived" },
+        ],
+      }
+    )
     res.json(blogs)
   } catch (error) {
     console.log(error)
@@ -22,8 +29,8 @@ async function create(req, res) {
 
 async function show(req, res) {
   try {
-    const blog = await Blog.findOne({
-      where: {id: req.params.id},
+    const blog = await Blog.findByPk(req.params.id,
+    {
       include: [
         { model: Comment, as: "commentReceived" },
         { model: Like, as: "likeReceived" },
