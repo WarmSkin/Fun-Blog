@@ -1,4 +1,4 @@
-const { Blog } = require('../models')
+const { Blog, Like, Comment } = require('../models')
 
 async function index(req, res) {
   try {
@@ -16,6 +16,22 @@ async function create(req, res) {
     const blog = await Blog.create(req.body)
     res.status(200).json(blog)
   } catch (error) {
+    res.status(500).json({ err: error })
+  }
+}
+
+async function show(req, res) {
+  try {
+    const blog = await Blog.findOne({
+      where: {id: req.params.id},
+      include: [
+        { model: Comment, as: "commentReceived" },
+        { model: Like, as: "likeReceived" },
+      ],
+    })
+    res.status(200).json(blog)
+  } catch (error) {
+    console.log(error)
     res.status(500).json({ err: error })
   }
 }
@@ -44,6 +60,7 @@ async function deleteBlog(req, res) {
 module.exports = {
   index,
   create,
+  show,
   update,
-  deleteBlog
+  delete: deleteBlog
 }
