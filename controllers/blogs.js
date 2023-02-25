@@ -30,8 +30,20 @@ async function update(req, res) {
   }
 }
 
+async function deleteBlog(req, res) {
+  try {
+    const numberOfRowsRemoved = await Blog.destroy(
+      { where: { id: req.params.id } }
+    )
+    res.status(200).json(numberOfRowsRemoved)
+  } catch (error) {
+    res.status(500).json({ err: error })
+  }
+}
+
 module.exports = {
   index,
   create,
   update,
+  deleteBlog
 }
