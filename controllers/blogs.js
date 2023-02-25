@@ -20,7 +20,18 @@ async function create(req, res) {
   }
 }
 
+async function update(req, res) {
+  try {
+    const blog = await Blog.findByPk(req.params.id)
+    await blog.update(req.body)
+    res.json(blog)
+  } catch (error) {
+    res.status(500).json({ err: error })
+  }
+}
+
 module.exports = {
   index,
   create,
+  update,
 }

@@ -11,6 +11,7 @@ const { decodeUserFromToken, checkAuth } = middleware
 router.use(decodeUserFromToken)
 router.get('/', checkAuth, blogsCtrl.index)
 router.post('/', checkAuth, blogsCtrl.create)
+router.put('/:id', checkAuth, blogsCtrl.update)
 
 
 module.exports = router
