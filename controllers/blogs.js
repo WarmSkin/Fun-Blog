@@ -1,5 +1,15 @@
 const { Blog } = require('../models')
 
+async function index(req, res) {
+  try {
+    const blogs = await Blog.findAll()
+    res.json(blogs)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ err: error })
+  }
+}
+
 async function create(req, res) {
   try {
 		req.body.ownerId = req.user.profile.id
@@ -11,5 +21,6 @@ async function create(req, res) {
 }
 
 module.exports = {
-  create
+  index,
+  create,
 }
