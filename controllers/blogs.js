@@ -7,7 +7,7 @@ async function index(req, res) {
         include: [
           { model: Profile, as: "owner" },
           { model: Comment, as: "commentReceived", include: {model: Profile, as: "owner"} },
-          { model: Like, as: "likeReceived" },
+          { model: Like, as: "likeReceived", include: {model: Profile, as: "owner"} },
         ],
       }
     )
