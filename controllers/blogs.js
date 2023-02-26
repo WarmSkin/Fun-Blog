@@ -5,7 +5,7 @@ async function index(req, res) {
     const blogs = await Blog.findAll(
       {
         include: [
-          { model: Profile },
+          { model: Profile, as: "owner" },
           { model: Comment, as: "commentReceived" },
           { model: Like, as: "likeReceived" },
         ],
