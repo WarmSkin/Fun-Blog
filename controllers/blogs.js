@@ -65,10 +65,34 @@ async function deleteBlog(req, res) {
   }
 }
 
+async function giveLike(req, res) {
+  try {
+		req.body.profileId = req.user.profile.id
+    req.body.blogId = req.params.id
+    const like = await Like.create(req.body)
+    res.status(200).json(like)
+  } catch (error) {
+    res.status(500).json({ err: error })
+  }
+}
+
+async function removeLike(req, res) {
+  try {
+    const numberOfRowsRemoved = await Like.destroy(
+      { where: { id: req.params.lId } }
+    )
+    res.status(200).json(numberOfRowsRemoved)
+  } catch (error) {
+    res.status(500).json({ err: error })
+  }
+}
+
 module.exports = {
   index,
   create,
   show,
   update,
-  delete: deleteBlog
+  delete: deleteBlog,
+  giveLike,
+  removeLike,
 }
