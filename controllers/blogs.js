@@ -1,10 +1,11 @@
-const { Blog, Like, Comment } = require('../models')
+const { Blog, Like, Comment, Profile } = require('../models')
 
 async function index(req, res) {
   try {
     const blogs = await Blog.findAll(
       {
         include: [
+          { model: Profile },
           { model: Comment, as: "commentReceived" },
           { model: Like, as: "likeReceived" },
         ],
