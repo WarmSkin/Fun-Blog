@@ -13,9 +13,11 @@ router.get('/', checkAuth, blogsCtrl.index)
 router.post('/', checkAuth, blogsCtrl.create)
 router.get('/:id', checkAuth, blogsCtrl.show)
 router.post('/:id/like', checkAuth, blogsCtrl.giveLike)
+router.post('/:id/comment', checkAuth, blogsCtrl.leaveComment)
 router.put('/:id', checkAuth, blogsCtrl.update)
 router.delete('/:id', checkAuth, blogsCtrl.delete)
 router.delete('/:id/like/:lId', checkAuth, blogsCtrl.removeLike)
+router.delete('/:id/comment/:cId', checkAuth, blogsCtrl.deleteComment)
 
 
 
