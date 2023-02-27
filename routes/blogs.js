@@ -10,11 +10,12 @@ const { decodeUserFromToken, checkAuth } = middleware
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
 router.get('/', checkAuth, blogsCtrl.index)
-router.post('/', checkAuth, blogsCtrl.create)
 router.get('/:id', checkAuth, blogsCtrl.show)
+router.post('/', checkAuth, blogsCtrl.create)
 router.post('/:id/like', checkAuth, blogsCtrl.giveLike)
 router.post('/:id/comment', checkAuth, blogsCtrl.leaveComment)
 router.put('/:id', checkAuth, blogsCtrl.update)
+router.put('/:id/add-photo', checkAuth, blogsCtrl.addPhoto)
 router.delete('/:id', checkAuth, blogsCtrl.delete)
 router.delete('/:id/like/:lId', checkAuth, blogsCtrl.removeLike)
 router.delete('/:id/comment/:cId', checkAuth, blogsCtrl.deleteComment)

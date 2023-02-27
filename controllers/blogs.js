@@ -109,6 +109,23 @@ async function deleteComment(req, res) {
   }
 }
 
+async function addPhoto(req, res) {
+  try {
+    const imageFile = req.files.photo.path
+    const blog = await Blog.findByPk(req.params.id)
+    const image = await cloudinary.uploader.upload(
+      imageFile, 
+      { tags: `${req.user.email}` }
+    )
+    blog.photo = image.url
+    await blog.save()
+    res.status(201).json(blog.photo)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ err: error })
+  }
+}
+
 module.exports = {
   index,
   create,
@@ -119,4 +136,5 @@ module.exports = {
   removeLike,
   leaveComment,
   deleteComment,
+  addPhoto
 }
