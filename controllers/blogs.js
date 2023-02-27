@@ -1,4 +1,5 @@
 const { Blog, Like, Comment, Profile } = require('../models')
+const cloudinary = require('cloudinary').v2
 
 async function index(req, res) {
   try {
