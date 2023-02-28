@@ -103,7 +103,11 @@ async function leaveComment(req, res) {
 		req.body.profileId = req.user.profile.id
     req.body.blogId = req.params.id
     const comment = await Comment.create(req.body)
-    res.status(200).json(comment)
+    const newComment = await Comment.findByPk(
+      comment.id,
+      {include:{model:Profile, as: "owner"}}
+      )
+    res.status(200).json(newComment)
   } catch (error) {
     res.status(500).json({ err: error })
   }
