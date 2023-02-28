@@ -10,6 +10,7 @@ async function index(req, res) {
           { model: Comment, as: "commentReceived", include: {model: Profile, as: "owner"} },
           { model: Like, as: "likeReceived", include: {model: Profile, as: "owner"} },
         ],
+        order: [['updatedAt', 'DESC']]
       }
     )
     res.json(blogs)
