@@ -47,7 +47,16 @@ async function show(req, res) {
 
 async function update(req, res) {
   try {
-    const blog = await Blog.findByPk(req.params.id)
+    const blog = await Blog.findByPk(
+      req.params.id,
+      {
+        include: [
+          { model: Profile, as: "owner" },
+          { model: Comment, as: "commentReceived", include: {model: Profile, as: "owner"} },
+          { model: Like, as: "likeReceived", include: {model: Profile, as: "owner"} },
+        ],
+      }
+      )
     await blog.update(req.body)
     res.json(blog)
   } catch (error) {
