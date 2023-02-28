@@ -102,8 +102,8 @@ async function leaveComment(req, res) {
   try {
 		req.body.profileId = req.user.profile.id
     req.body.blogId = req.params.id
-    const like = await Comment.create(req.body)
-    res.status(200).json(like)
+    const comment = await Comment.create(req.body)
+    res.status(200).json(comment)
   } catch (error) {
     res.status(500).json({ err: error })
   }

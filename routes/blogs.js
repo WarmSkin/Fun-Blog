@@ -18,7 +18,7 @@ router.put('/:id', checkAuth, blogsCtrl.update)
 router.put('/:id/add-photo', checkAuth, blogsCtrl.addPhoto)
 router.delete('/:id', checkAuth, blogsCtrl.delete)
 router.delete('/:lId/like', checkAuth, blogsCtrl.removeLike)
-router.delete('/:id/comment/:cId', checkAuth, blogsCtrl.deleteComment)
+router.delete('/:cId/comment', checkAuth, blogsCtrl.deleteComment)
 
 
 
