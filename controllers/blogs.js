@@ -57,8 +57,9 @@ async function update(req, res) {
           { model: Like, as: "likeReceived", include: {model: Profile, as: "owner"} },
         ],
       }
-      )
-    await blog.update(req.body)
+    )
+    if(req.user.profile.id === blog.ownerId)
+      await blog.update(req.body)
     res.json(blog)
   } catch (error) {
     res.status(500).json({ err: error })
@@ -67,10 +68,13 @@ async function update(req, res) {
 
 async function deleteBlog(req, res) {
   try {
-    const numberOfRowsRemoved = await Blog.destroy(
-      { where: { id: req.params.id } }
-    )
-    res.status(200).json(numberOfRowsRemoved)
+    const blog = await Blog.findByPk(req.params.Id)
+    if(blog.ownerId === req.user.profile.id){
+      const numberOfRowsRemoved = await Blog.destroy(
+        { where: { id: req.params.id } }
+      )
+      res.status(200).json(numberOfRowsRemoved)
+    }
   } catch (error) {
     res.status(500).json({ err: error })
   }
@@ -89,10 +93,13 @@ async function giveLike(req, res) {
 
 async function removeLike(req, res) {
   try {
-    const numberOfRowsRemoved = await Like.destroy(
-      { where: { id: req.params.lId } }
-    )
-    res.status(200).json(numberOfRowsRemoved)
+    const like = await Like.findByPk(req.params.lId)
+    if(like.profileId === req.user.profile.id){
+      const numberOfRowsRemoved = await Like.destroy(
+        { where: { id: req.params.lId } }
+      )
+      res.status(200).json(numberOfRowsRemoved)
+    }
   } catch (error) {
     res.status(500).json({ err: error })
   }
@@ -115,10 +122,13 @@ async function leaveComment(req, res) {
 
 async function deleteComment(req, res) {
   try {
-    const numberOfRowsRemoved = await Comment.destroy(
-      { where: { id: req.params.cId } }
-    )
-    res.status(200).json(numberOfRowsRemoved)
+    const comment = await Comment.findByPk(req.params.cId)
+    if(comment.profileId === req.user.profile.id){
+      const numberOfRowsRemoved = await Comment.destroy(
+        { where: { id: req.params.cId } }
+      )
+      res.status(200).json(numberOfRowsRemoved)
+    }
   } catch (error) {
     res.status(500).json({ err: error })
   }
