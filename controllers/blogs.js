@@ -68,14 +68,16 @@ async function update(req, res) {
 
 async function deleteBlog(req, res) {
   try {
-    const blog = await Blog.findByPk(req.params.Id)
-    if(blog.ownerId === req.user.profile.id){
+    // There is a bug for doing this
+    // const blog = await Blog.findByPk(req.params.Id)
+    // if(req.user.profile.id === blog.ownerId){
       const numberOfRowsRemoved = await Blog.destroy(
         { where: { id: req.params.id } }
       )
       res.status(200).json(numberOfRowsRemoved)
-    }
+    // }
   } catch (error) {
+    console.log(error)
     res.status(500).json({ err: error })
   }
 }
